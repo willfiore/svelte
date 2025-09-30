@@ -5,7 +5,7 @@ import { active_effect, active_reaction } from './runtime.js';
 import { create_user_effect } from './reactivity/effects.js';
 import { async_mode_flag, legacy_mode_flag } from '../flags/index.js';
 import { FILENAME } from '../../constants.js';
-import { BRANCH_EFFECT, EFFECT_RAN } from './constants.js';
+import { BRANCH_EFFECT, USER_EFFECT } from './constants.js';
 
 /** @type {ComponentContext | null} */
 export let component_context = null;
@@ -100,7 +100,7 @@ export function setContext(key, context) {
 
 	if (async_mode_flag) {
 		var flags = /** @type {Effect} */ (active_effect).f;
-		var valid = !active_reaction && (flags & BRANCH_EFFECT) !== 0 && (flags & EFFECT_RAN) === 0;
+		var valid = !active_reaction && (flags & BRANCH_EFFECT) !== 0 && (flags & USER_EFFECT) === 0;
 
 		if (!valid) {
 			e.set_context_after_init();
